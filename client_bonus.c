@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bouhammo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 22:49:38 by bouhammo          #+#    #+#             */
-/*   Updated: 2024/05/20 22:49:40 by bouhammo         ###   ########.fr       */
+/*   Created: 2024/05/20 22:49:49 by bouhammo          #+#    #+#             */
+/*   Updated: 2024/05/20 22:49:52 by bouhammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 char	*conver_binary(int n)
 {
@@ -20,8 +20,6 @@ char	*conver_binary(int n)
 	ptr = (char *)malloc(9 * sizeof(char));
 	if (ptr == NULL)
 		return (NULL);
-	if (n == 0)
-		write(1, "0", 1);
 	i = 7;
 	while (i >= 0)
 	{
@@ -37,10 +35,12 @@ void	send_string(char *str, int pid)
 {
 	char	*ptr;
 	int		i;
+	int		len;
 	int		j;
 
+	len = ft_strlen(str) + 1;
 	i = 0;
-	while (str[i] != '\0')
+	while (i < len)
 	{
 		j = 7;
 		ptr = conver_binary(str[i]);
@@ -58,10 +58,18 @@ void	send_string(char *str, int pid)
 	}
 }
 
+void	signal_handler(int sig)
+{
+	(void)sig;
+	write(1, "message received successfully\n", 30);
+	return ;
+}
+
 int	main(int ac, char *av[])
 {
 	int	pid;
 
+	signal(SIGUSR1, signal_handler);
 	if (ac != 3)
 		write(1, "Error\n", 6);
 	else

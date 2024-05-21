@@ -1,24 +1,41 @@
-FLAGS	= -Wall -Wextra -Werror
-RM		= rm -rf
+CC= cc 
+CFLAGS = -Wall -Wextra -Werror 
+PATH = ft_libft
 
-server	=	server
-client	=	client
+OBJC = client.c $(PATH)/ft_atoi.c 
+ONBS = server.c $(PATH)/ft_putnbr.c $(PATH)/ft_putchar.c
+
+OBJCB = client_bonus.c $(PATH)/ft_atoi.c $(PATH)/ft_strlen.c 
+ONBSB = server_bonus.c $(PATH)/ft_putnbr.c $(PATH)/ft_putchar.c
+
+		
+server = server 
+client = client
+
+server_b = server_bonus 
+client_b = client_bonus
+
+all : $(server) $(client)
+
+$(server): $(ONBS) 
+	
+	$(CC)  $(CFLAGS) $(ONBS) -o $(server)
+
+$(client): $(OBJC) 
+	$(CC) $(CFLAGS) $(OBJC) -o $(client)
+	
+bonus : $(server_b) $(client_b)
 
 
-OBJs	=	server.c
-OBJc	=	client.c
+$(server_b): $(ONBSB) 
+	$(CC) $(CFLAGS) $(ONBSB) -o $(server_b)
 
+$(client_b): $(OBJCB) 
+	$(CC) $(CFLAGS) $(OBJCB) -o $(client_b)
 
-all: ${server} ${client}
+clean : 
+	rm -rf $(server) $(client) $(server_b) $(client_b)
 
-${server}: ${OBJs}
-			${CC} ${CFLAGS} ${OBJs} -o ${server}
-${client}: ${OBJc}
-			${CC} ${CFLAGS} ${OBJc} -o ${client}
-
-clean:
-	${RM} ${server} ${client} 
-
-fclean:	clean
-
-re:	fclean all
+fclean : clean
+	
+re : fclean all
