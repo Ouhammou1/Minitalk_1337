@@ -74,7 +74,7 @@ int	main(int ac, char *av[])
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
 	{
-		sleep(8);
+		pause();
 	}
 	return (0);
 }

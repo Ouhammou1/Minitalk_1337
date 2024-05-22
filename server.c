@@ -58,13 +58,11 @@ void	handle_signal(int sig, struct __siginfo *info, void *nul)
 
 int	main(int ac, char *av[])
 {
-	int					fd;
 	int					pid;
 	struct sigaction	sa;
 
 	(void)ac;
 	(void)av;
-	fd = 0;
 	pid = getpid();
 	ft_putnbr(pid);
 	ft_putchar('\n');
@@ -74,7 +72,7 @@ int	main(int ac, char *av[])
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
 	{
-		sleep(8);
+		pause();
 	}
 	return (0);
 }

@@ -2,11 +2,11 @@ CC= cc
 CFLAGS = -Wall -Wextra -Werror 
 PATH = ft_libft
 
-OBJC = client.c $(PATH)/ft_atoi.c 
+OBJC = client.c $(PATH)/ft_atoi.c  $(PATH)/ft_strlen.c
 ONBS = server.c $(PATH)/ft_putnbr.c $(PATH)/ft_putchar.c
 
 OBJCB = client_bonus.c $(PATH)/ft_atoi.c $(PATH)/ft_strlen.c 
-ONBSB = server_bonus.c $(PATH)/ft_putnbr.c $(PATH)/ft_putchar.c
+ONBSB =  server_bonus.c $(PATH)/ft_putnbr.c $(PATH)/ft_putchar.c
 
 		
 server = server 

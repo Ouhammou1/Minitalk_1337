@@ -19,8 +19,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-char	*conver_binary(int n);
+void	send_bits(int octet, int pid);
 int		ft_power(int a, int b);
+void	send_string(char *str, int pid);
 void	handle_signal(int sig, struct __siginfo *info, void *nul);
 
 #endif

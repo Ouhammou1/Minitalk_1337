@@ -12,56 +12,43 @@
 
 #include "minitalk_bonus.h"
 
-char	*conver_binary(int n)
+void	send_bits(int octet, int pid)
 {
-	char	*ptr;
 	int		i;
+	char	bit;
 
-	ptr = (char *)malloc(9 * sizeof(char));
-	if (ptr == NULL)
-		return (NULL);
-	i = 7;
-	while (i >= 0)
+	i = 0;
+	bit = 0;
+	while (i < 8)
 	{
-		ptr[i] = (n & 1) + '0';
-		n = n >> 1;
-		i--;
+		bit = (octet >> i & 1) + 48;
+		if (bit == '0')
+			kill(pid, SIGUSR1);
+		if (bit == '1')
+			kill(pid, SIGUSR2);
+		i++;
+		usleep(900);
 	}
-	ptr[8] = '\0';
-	return (ptr);
 }
 
 void	send_string(char *str, int pid)
 {
-	char	*ptr;
-	int		i;
-	int		len;
-	int		j;
+	int	i;
+	int	len;
 
 	len = ft_strlen(str) + 1;
 	i = 0;
 	while (i < len)
 	{
-		j = 7;
-		ptr = conver_binary(str[i]);
-		while (j >= 0)
-		{
-			if (ptr[j] == '0')
-				kill(pid, SIGUSR1);
-			if (ptr[j] == '1')
-				kill(pid, SIGUSR2);
-			j--;
-			usleep(500);
-		}
+		send_bits(str[i], pid);
 		i++;
-		free(ptr);
 	}
 }
 
 void	signal_handler(int sig)
 {
 	(void)sig;
-	write(1, "message received successfully\n", 30);
+	write(1, "\033[1;32mmessage received successfully\033[0m\n", 37);
 	return ;
 }
 
